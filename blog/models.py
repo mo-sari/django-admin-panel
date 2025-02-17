@@ -20,7 +20,9 @@ class Post(models.Model):
                                  default=1)
     title = models.CharField(max_length=100)
     excerpt = models.TextField(null=True)
-    slug = models.SlugField(max_length=250, unique_for_date='publish')
+    slug = models.SlugField(max_length=250,
+                            unique_for_date='publish',
+                            help_text='this is the slug')
     publish = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User,
                                null=True,

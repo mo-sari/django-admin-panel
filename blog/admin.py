@@ -5,27 +5,21 @@ from django.contrib.contenttypes.models import ContentType
 
 admin.site.register(Category)
 
-# these below are the two different ways of doing the same thing
-# class PostAdmin(admin.ModelAdmin):
-#     fields = ['title', 'author']
+
+class PostAdmin(admin.ModelAdmin):
+    # fields = ['title', ('author', 'slug')]
+    # above we grouped author and slug together
+
+    fieldsets = (
+        ('Main Section', {
+            'fields': ('title', 'author'),
+            'description': 'just a simple description',
+        }),
+        ('Section two', {
+            'fields': ('slug',),
+            'classes': ('collapse',),
+        }),
+    )
 
 
-# admin.site.register(Post, PostAdmin)
-# the above way or below
-
-# @admin.register(Post)
-# class PostAdmin(admin.ModelAdmin):
-#     fields = ['title', 'author']
-# =======================================================
-# this is the way to register all the models at once
-
-models = django.apps.apps.get_models()
-
-for model in models:
-    try:
-        admin.site.register(model)
-    except admin.sites.AlreadyRegistered:
-        continue
-
-
-admin.site.unregister(ContentType)
+admin.site.register(Post, PostAdmin)
