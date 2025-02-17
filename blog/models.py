@@ -31,5 +31,10 @@ class Post(models.Model):
                               choices=options,
                               default='draft')
 
+    class Meta:
+        verbose_name = ("Post")
+        verbose_name_plural = ("Posts")
+        ordering = ("-publish",)
+
     def __str__(self):
         return self.title
