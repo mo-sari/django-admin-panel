@@ -1,11 +1,14 @@
 from django.contrib import admin
 from django.urls import path
-# from blog.admin import blog_site
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
-    # path('blogAdmin/', blog_site.urls),
     path('admin/', admin.site.urls),
-]
-# admin.site.index_title = 'سایت لباس فروشی'
-# admin.site.site_header = 'پنل ادمین سایت لباس فروشی'
-# admin.site.site_title = 'تایتل سایت'
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# first create the static file manually
+# then configure what you need in settings.py
+# then the above url and finaly
+# run "python manage.py collectstatic"
+# then create templates manually
+# again templates configurations in settings.py
