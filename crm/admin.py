@@ -19,6 +19,9 @@ class MembershipAdmin(admin.ModelAdmin):
     # list_editable = ['name', 'membership_plan']
     exclude = ('', )
     actions = ('set_membership_to_active',)
+    prepopulated_fields = {
+        'unique_code': ('membership_plan',)
+    }
 
     def set_membership_to_active(self, request, queryset):
 
