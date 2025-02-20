@@ -1,4 +1,5 @@
-from .models import Post
+import pprint
+from .models import Post, Category
 from django.contrib import admin
 from django import forms
 
@@ -12,22 +13,20 @@ class PostForm(forms.ModelForm):
         model = Post
         exclude = ('',)
 
+    def clean(self):
+        title = self.cleaned_data.get('title')
+        if title.startswith('N'):
+            raise forms.ValidationError('this value is not acceptable')
+        return super().clean()
+
 
 class PostFormAdmin(admin.ModelAdmin):
     form = PostForm
 
-    # having all the fields like just the line above or
-    # having selective fields with below solution
-
-    # fieldsets = (
-    #     ('First Section', {
-    #         'fields': ('title', 'category'),
-    #         'description': 'just a simple description'
-    #     }),
-    # )
-
 
 admin.site.register(Post, PostFormAdmin)
+admin.site.register(Category)
+
 
 # ================================================
 # EXTRA POINST
