@@ -14,6 +14,15 @@ class CourseAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('course_title',)
     }
+    fieldsets = (
+        ('First Section', {
+            'fields': ('course_title', ),
+            'description': 'The main section'
+        }),
+        ('section section', {
+            'fields': ('slug', )
+        }),
+    )
 
     def course_heading(self, obj):
         return obj.course_title + " - " + obj.course_description
