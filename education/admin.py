@@ -3,26 +3,26 @@ from .models import Course, Lecture
 
 
 class InlineLecture(admin.StackedInline):
-    # instead of StackedInline we could have
-    # TabularInline
     model = Lecture
-    # max_num = 2
 
 
 class CourseAdmin(admin.ModelAdmin):
     inlines = [InlineLecture]
+    list_display = ['course_title',
+                    'course_description',
+                    'course_heading']
     prepopulated_fields = {
         'slug': ('course_title',)
     }
+
+    def course_heading(self, obj):
+        return obj.course_title + " - " + obj.course_description
 
 
 class LectureAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('lecture_name', )
     }
-    # it works while adding a single Lecture
-    # but while adding Lectures along with
-    # a course, it won't
 
 
 admin.site.register(Lecture, LectureAdmin)
